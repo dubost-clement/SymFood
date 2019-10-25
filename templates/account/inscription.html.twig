@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>s'inscrire</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password) }}
+        <button type="submit" class="btn btn-success mt-3">Confirmez</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+
+

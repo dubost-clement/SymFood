@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecipeController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <h2>{{ recipe.title }}</h2>
+                <p>{{ recipe.description }}
+                <p>recette crée par {{ recipe.user.firstName }}</p>
+            </div>
+            <div class="col-md-4">
+                <h2 class="text-center">vous aimerez aussi</h2>
+                {% for suggestion in suggestions%}
+                    <div class="card mb-5 shadow-sm">
+                        <img src="http://via.placeholder.com/640x360" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ suggestion.title }}</h5>
+                            <a href="{{ path('recette', {'slug': suggestion.slug}) }}" class="btn btn-primary">Voir la recette</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecipeController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Créer une recette</h2>
+        {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.category) }}
+        <button type="submit" class="btn btn-success mt-3">Créer la recette</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
