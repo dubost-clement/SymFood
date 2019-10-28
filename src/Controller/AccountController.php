@@ -48,6 +48,7 @@ class AccountController extends AbstractController
 
 
     /**
+     * Affiche la page du dashboard
      * @Route("/dashboard", name="dashboard")
      * @Security("is_granted('ROLE_USER')")
      * @param RecipeRepository $recipeRepository
@@ -61,6 +62,20 @@ class AccountController extends AbstractController
             'controller_name' => 'AccountController',
             'userName' => $currentUser->getFirstName(),
             'recipes' => $recipeRepository->findRecipesByUser($currentUser->getId())
+        ]);
+    }
+
+    /**
+     * Affiche la page des informations de l'utilisateur
+     * @Route("/mon-compte", name="mon_compte")
+     * @Security("is_granted('ROLE_USER')")
+     * @return Response
+     */
+    public function userProfile()
+    {
+
+        return $this->render('account/userProfile.html.twig', [
+            'user' => $this->getUser()
         ]);
     }
 }
