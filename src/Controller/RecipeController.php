@@ -89,6 +89,8 @@ class RecipeController extends AbstractController
 
             $manager->persist($recipe);
             $manager->flush();
+
+            return $this->redirectToRoute("dashboard");
         }
 
         return $this->render('recipe/newRecipe.html.twig', [
@@ -107,12 +109,16 @@ class RecipeController extends AbstractController
      */
     public function updateRecipe(Recipe $recipe, Request $request, ObjectManager $manager)
     {
+        $this->denyAccessUnlessGranted('EDIT', $recipe);
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($recipe);
             $manager->flush();
+
+            return $this->redirectToRoute("dashboard");
         }
 
         return $this->render('recipe/updateRecipe.html.twig', [
@@ -122,14 +128,17 @@ class RecipeController extends AbstractController
 
     /**
      * Supprime une recette
-     * @Route("/supprimer-recette", name="supprimer_recette")
+     * @Route("/supprimer-recette/{slug}", name="supprimer_recette")
      * @Security("is_granted('ROLE_USER')")
      * @return Response
      */
-    public function deleteRecipe()
+    public function deleteRecipe(Recipe $recipe, ObjectManager $manager)
     {
-        return $this->render('recipe/', [
+        $this->denyAccessUnlessGranted('DELETE', $recipe);
 
-        ]);
+        $manager->remove($recipe);
+        $manager->flush();
+
+        return $this->redirectToRoute("dashboard");
     }
 }
