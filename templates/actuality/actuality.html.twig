@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecipeController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <h2>{{ actuality.title }}</h2>
+                <p>{{ actuality.description }}
+            </div>
+            <div class="col-md-4">
+                <h2 class="text-center">à voir également</h2>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

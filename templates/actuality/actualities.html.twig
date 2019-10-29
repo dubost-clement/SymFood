@@ -1,7 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ActualityController!{% endblock %}
+{% block title %}Hello RecipeController!{% endblock %}
 
 {% block body %}
-<h1>La page est en cour de construction revenez plus tard.</h1>
+    <div class="container">
+        <h2>Les actualités</h2>
+
+        <div class="row">
+            {% for actuality in actualities %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card mb-5 shadow-sm">
+                        <img src="http://via.placeholder.com/640x360" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ actuality.title }}</h5>
+                            <p class="card-text">{{ actuality.description | slice(0, 100) ~  ' ....'}}</p>
+                            <a href="{{ path('actualite', {'slug': actuality.slug}) }}" class="btn btn-primary">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
+

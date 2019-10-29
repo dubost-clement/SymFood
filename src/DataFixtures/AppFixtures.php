@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Actuality;
 use App\Entity\Category;
 use App\Entity\Recipe;
 use App\Entity\User;
@@ -56,6 +57,16 @@ class AppFixtures extends Fixture
 
                 $manager->persist($recipe);
             }
+        }
+
+        for ($a = 0; $a < 10; $a++) {
+            $actuality = new Actuality();
+
+            $actuality->setTitle($faker->sentence(4))
+                ->setDescription($faker->paragraph())
+            ;
+
+            $manager->persist($actuality);
         }
 
         $manager->flush();
