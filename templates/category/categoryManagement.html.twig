@@ -1,0 +1,32 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center my-5">Gestion des catégories</h2>
+        <div class="row col-md-6 col-md-offset-2 custyle">
+            <table class="table table-striped custab">
+                <thead>
+                <a class="btn btn-primary btn-xs pull-right" href="{{ path('nouvelle_categorie') }}">Ajouter une catégorie</a>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id}}</td>
+                        <td>{{ category.title}}</td>
+                        <td class="text-center">
+                            <a class='btn btn-info btn-xs' href="{{ path('modifier_categorie', {'slug': category.slug}) }}">Modifier</a>
+                            <a class="btn btn-danger btn-xs" href="{{ path('supprimer_categorie', {'slug': category.slug}) }}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
