@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Category
 {
@@ -22,6 +24,11 @@ class Category
      * @ORM\Column(type="string", length=255)
      */
     private $title;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="category")
@@ -46,6 +53,31 @@ class Category
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Permet d'initialiser le slug
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug()
+    {
+        if (empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
+        }
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

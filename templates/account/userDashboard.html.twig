@@ -3,19 +3,18 @@
 
 {% block body %}
     <div class="container">
-        <h2 class="text-center mb-5">Vos recettes</h2>
+        <h2 class="text-center my-5">Vos recettes</h2>
         <div class="row">
             {% for recipe in recipes %}
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card mb-5 shadow-sm">
                         <img src="http://via.placeholder.com/640x360" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title text-center">{{ recipe.title }}</h5>
+                            <h5 class="card-title text-center"><a href="{{ path('recette', {'slug': recipe.slug}) }}">{{ recipe.title }}</a></h5>
                             {% if is_granted(['EDIT', 'DELETE'], recipe) %}
                                 <a href="{{ path('modifier_recette', {'slug': recipe.slug}) }}" class="btn btn-primary">Modifier</a>
                                 <a href="{{ path('supprimer_recette', {'slug' : recipe.slug}) }}" class="btn btn-danger">Supprimer</a>
                             {% endif %}
-                            <a href="{{ path('recette', {'slug': recipe.slug}) }}" class="btn btn-primary">Voir</a>
                         </div>
                     </div>
                 </div>

@@ -23,6 +23,18 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create('fr_FR');
+        $admin = new User();
+        $adminHash = $this->encoder->encodePassword($admin, 'toto');
+
+        $admin->setFirstName('toto')
+            ->setLastName('l\'asticot')
+            ->setEmail('toto@gmail.com')
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword($adminHash)
+        ;
+
+        $manager->persist($admin);
+
         $users = [];
 
         for ($u = 0; $u < 10; $u++){

@@ -1,10 +1,13 @@
 {% extends 'baseAdmin.html.twig' %}
 
+{% block title %}Hello CategoryController!{% endblock %}
+
 {% block body %}
-
+    <div class="container">
+        <h2 class="my-5">Nouvelle catégorie</h2>
+        {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        <button type="submit" class="btn btn-success mt-3">Créer</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
-
-{% block title %}
-
-{% endblock %}
-
