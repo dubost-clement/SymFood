@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Form\EmailUpdateType;
 use App\Form\RegistrationType;
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -69,13 +70,31 @@ class AccountController extends AbstractController
      * Affiche la page des informations de l'utilisateur
      * @Route("/mon-compte", name="mon_compte")
      * @Security("is_granted('ROLE_USER')")
+     * @param Request $request
+     * @param ObjectManager $manager
      * @return Response
      */
-    public function userProfile()
+    public function userProfile(Request $request, ObjectManager $manager)
     {
+        $actualUser = $this->getUser();
+        $form = $this->createForm(EmailUpdateType::class, $actualUser);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($actualUser);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "votre adresse email a bien été modifiée."
+            );
+
+            return $this->redirectToRoute("mon_compte");
+        }
 
         return $this->render('account/userProfile.html.twig', [
-            'user' => $this->getUser()
+            'user' => $actualUser,
+            'form' => $form->createView()
         ]);
     }
 }

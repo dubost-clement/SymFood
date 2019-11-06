@@ -2,9 +2,33 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <h1 class="text-center my-5">Mes informations</h1>
-    <p>{{ user.fullName }}</p>
-    <p>{{ user.email }}</p>
+    <div class="container">
+        <h1 class="text-center my-5">Mes informations</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h2 class="mb-3">Votre email</h2>
+        <div class="row">
+            <div class="col"><p>Adresse e-mail actuelle</p></div>
+            <div class="col"><p>{{ user.email }}</p></div>
+        </div>
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col">{{ form_label(form.email) }}</div>
+            <div class="col">{{ form_widget(form.email) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Modifier</button>
+        {{ form_end(form) }}
+
+        <h2 class="mb-3">Votre mot de passe</h2>
+        <div class="row">
+
+        </div>
+    </div>
 {% endblock %}
 
 

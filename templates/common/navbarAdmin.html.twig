@@ -1,19 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link" href="{{ path('accueil') }}"><i class="fas fa-home mr-1"></i>Accueil</a>
-            <a class="nav-item nav-link" href="{{ path('dashboard') }}"><i class="fas fa-utensils mr-1"></i>Mes recettes</a>
-            <a class="nav-item nav-link" href="{{ path('nouvelle_recette') }}"><i class="fas fa-plus mr-1"></i>Nouvelle recette</a>
-            {% if app.user.roles[0] == "ROLE_ADMIN" %}
-                <a class="nav-item nav-link" href="{{ path('gestion_actualite') }}"><i class="fas fa-bell mr-1"></i>Actualités</a>
-                <a class="nav item nav-link" href="{{ path('gestion_categorie') }}"><i class="fas fa-tag mr-1"></i> Catégories</a>
-            {% endif %}
-            <a class="nav-item nav-link" href="{{ path('mon_compte') }}"><i class="fas fa-user mr-1"></i>Mon compte</a>
-            <a class="nav-item nav-link" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt mr-1"></i>Déconnexion</a>
-        </div>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="{{ path('accueil') }}"><i class="fas fa-home mr-1"></i>Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="{{ path('dashboard') }}"><i class="fas fa-utensils mr-1"></i>Mes recettes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="{{ path('nouvelle_recette') }}"><i class="fas fa-plus mr-1"></i>Nouvelle recette</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ app.user.fullname }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{{ path('mon_compte') }}"><i class="fas fa-user mr-1"></i>Mon compte</a>
+                    {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                        <a class="dropdown-item" href="{{ path('gestion_actualite') }}"><i class="fas fa-bell mr-1"></i>Actualités</a>
+                        <a class="dropdown-item" href="{{ path('gestion_categorie') }}"><i class="fas fa-tag mr-1"></i> Catégories</a>
+                    {% endif %}
+                    <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt mr-1"></i>Déconnexion</a>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>
