@@ -116,6 +116,9 @@ class Recipe
         if (empty($this->slug)) {
             $slugify = new Slugify();
             $this->slug = $slugify->slugify($this->title);
+        } else {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
         }
     }
 
