@@ -5,7 +5,12 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8 my-5">
+                {% if recipe.imageName is null %}
+                    <img class="card-img-top" alt="Thumbnail [200x250]" src="http://via.placeholder.com/538x250">
+                    {% else %}
+                    <img class="img-fluid w-100" src="{{ vich_uploader_asset(recipe, 'imageFile') | imagine_filter('recipeBackground') }}" alt="{{ recipe.imageName }}" />
+                {% endif %}
                 <h1 class="my-5">{{ recipe.title }}</h1>
                 <p>{{ recipe.description }}
                 <p>recette crée par {{ recipe.user.firstName }}</p>

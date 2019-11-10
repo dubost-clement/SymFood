@@ -7,4 +7,8 @@ liip_imagine:
             quality: 85
             filters:
                 thumbnail: { size: [538, 250], mode: outbound}
+        recipeBackground:
+            quality: 85
+            filters:
+                thumbnail: { size: [730, 250], mode: outbound}
 

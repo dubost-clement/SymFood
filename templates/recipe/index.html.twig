@@ -19,7 +19,11 @@
             {% for recipe in recipes %}
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card mb-5 shadow-sm">
-                        <img src="http://via.placeholder.com/640x360" class="card-img-top" alt="...">
+                        {% if recipe.imageName is null %}
+                                <img class="card-img-top" alt="Thumbnail [200x250]"  src="http://via.placeholder.com/538x250">
+                                {% else %}
+                                <img class="img-fluid" src="{{ vich_uploader_asset(recipe, 'imageFile') | imagine_filter('thumb') }}" alt="{{ recipe.imageName }}" />
+                        {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ recipe.title }}</h5>
                             <p class="card-text">{{ recipe.description | slice(0, 100) ~  ' ....'}}</p>
