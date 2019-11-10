@@ -2,17 +2,19 @@
 
 namespace App\Controller;
 
-
 use App\Entity\User;
+use App\Entity\Profile;
+use App\Form\ProfileType;
 use App\Form\EmailUpdateType;
 use App\Form\RegistrationType;
 use App\Repository\RecipeRepository;
-use Doctrine\Common\Persistence\ObjectManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ProfileRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
@@ -72,9 +74,10 @@ class AccountController extends AbstractController
      * @Security("is_granted('ROLE_USER')")
      * @param Request $request
      * @param ObjectManager $manager
+     * @param ProfileRepository $profileRepository
      * @return Response
      */
-    public function userProfile(Request $request, ObjectManager $manager)
+    public function userProfile(Request $request, ObjectManager $manager, ProfileRepository $profileRepository)
     {
         $actualUser = $this->getUser();
         $form = $this->createForm(EmailUpdateType::class, $actualUser);
@@ -92,9 +95,33 @@ class AccountController extends AbstractController
             return $this->redirectToRoute("mon_compte");
         }
 
+        $profile = $profileRepository->findOneBy(['user' => $actualUser]);
+        $profileForm = $this->createForm(ProfileType::class, $profile);
+
+        if ($profile === null) {
+            $profile = new Profile();
+            $profile->setUser($this->getUser());
+            $profileForm = $this->createForm(ProfileType::class, $profile);
+        }
+
+        $profileForm->handleRequest($request);
+
+        if ($profileForm->isSubmitted() && $profileForm->isValid()) {
+            $manager->persist($profile);
+            $manager->flush();
+            
+            $this->addFlash(
+                'success',
+                "votre photo de profil a bien été modifiée."
+            );
+
+            return $this->redirectToRoute("mon_compte");
+        }
+
         return $this->render('account/userProfile.html.twig', [
             'user' => $actualUser,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'profile' => $profileForm->createView(),
         ]);
     }
 }

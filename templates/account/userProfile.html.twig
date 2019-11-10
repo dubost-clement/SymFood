@@ -10,7 +10,7 @@
             </div>
         {% endfor %}
 
-        <h2 class="mb-3">Votre email</h2>
+        <h2 class="my-3">Votre email</h2>
         <div class="row">
             <div class="col"><p>Adresse e-mail actuelle</p></div>
             <div class="col"><p>{{ user.email }}</p></div>
@@ -24,11 +24,21 @@
         <button type="submit" class="btn btn-success mt-3">Modifier</button>
         {{ form_end(form) }}
 
-        <h2 class="mb-3">Votre mot de passe</h2>
+        <h2 class="my-3">photo de profil</h2>
+        {{ form_start(profile) }}
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">{{ form_row(profile.imageFile) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Modifier</button>
+        {{ form_end(profile) }}
+
+        <h2 class="my-3">Votre mot de passe</h2>
         <div class="row">
 
         </div>
     </div>
+        {{ dump(app.user) }}
 {% endblock %}
 
 

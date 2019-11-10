@@ -50,6 +50,11 @@ class User implements UserInterface
      */
     private $lastName;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Profile", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $profile;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
@@ -191,5 +196,23 @@ class User implements UserInterface
     public function getFullname()
     {
         return "{$this->firstName} {$this->lastName}";
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = $profile === null ? null : $this;
+        if ($newUser !== $profile->getUser()) {
+            $profile->setUser($newUser);
+        }
+
+        return $this;
     }
 }
