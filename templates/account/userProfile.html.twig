@@ -27,7 +27,13 @@
         <h2 class="my-3">photo de profil</h2>
         {{ form_start(profile) }}
         <div class="row">
-            <div class="col"></div>
+            <div class="col">
+            {% if app.user.profile is null %}
+                <img class="img-fluid mr-1" alt="Thumbnail [250x250]"  src="http://via.placeholder.com/250x250">
+                {% else %}
+                <img class="img-fluid mr-1" src="{{ vich_uploader_asset(app.user.profile, 'imageFile' ) }}" alt="" />
+            {% endif %}
+            </div>
             <div class="col">{{ form_row(profile.imageFile) }}</div>
         </div>
         <button type="submit" class="btn btn-success mt-3">Modifier</button>
